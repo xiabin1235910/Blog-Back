@@ -29,6 +29,14 @@ public class Comment extends BaseDomainObject {
         this.user = user;
     }
 
+    public Blog getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
+    }
+
     public String getContent() {
         return content;
     }

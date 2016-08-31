@@ -4,6 +4,7 @@ import com.ben.domain.jpa.entity.BaseDomainObject;
 import com.ben.domain.jpa.entity.account.User;
 import com.ben.domain.jpa.entity.comment.Comment;
 import com.ben.domain.jpa.entity.tag.Tag;
+import com.ben.domain.jpa.entity.type.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -25,6 +26,9 @@ public class Blog extends BaseDomainObject {
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Type type;
 
     @ManyToMany(mappedBy = "blogs")
     private List<Tag> tags = new ArrayList<Tag>();
@@ -63,5 +67,29 @@ public class Blog extends BaseDomainObject {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
