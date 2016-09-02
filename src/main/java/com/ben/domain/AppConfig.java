@@ -39,7 +39,7 @@ import java.util.List;
 //@EnableJpaRepositories
 @EnableWebMvc
 @Import(RepositoryRestMvcConfiguration.class)
-public class AppConfig {
+public class AppConfig extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(AppConfig.class, args);
@@ -51,6 +51,18 @@ public class AppConfig {
         for (String beanName : beanNames) {
             System.out.println(beanName);
         }
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        // Configure JSON support
+        MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
+        mappingJacksonHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        mappingJacksonHttpMessageConverter.getObjectMapper().setDateFormat(format);
+        mappingJacksonHttpMessageConverter.setPrettyPrint(true);
+        // mappingJacksonHttpMessageConverter.getObjectMapper().getSerializationConfig().setSerializationInclusion(Inclusion.NON_NULL);
+        converters.add(mappingJacksonHttpMessageConverter);
     }
 }
 
