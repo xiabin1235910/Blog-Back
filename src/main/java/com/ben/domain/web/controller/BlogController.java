@@ -8,6 +8,9 @@ import com.ben.domain.jpa.entity.blog.Blog;
 import com.ben.domain.jpa.repository.BlogRepository;
 import com.ben.domain.web.bean.BlogBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,9 +38,10 @@ public class BlogController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public @ResponseBody Blog getBlog() {
-        Blog blog = blogRepository.findOne(Long.parseLong("1"));
-        return blog;
+    public @ResponseBody
+    ResponseEntity<List<Blog>> getBlog() {
+        List<Blog> blogList = blogRepository.findTop5ByOrderByCreatedateDesc();
+        return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
     }
 
 }

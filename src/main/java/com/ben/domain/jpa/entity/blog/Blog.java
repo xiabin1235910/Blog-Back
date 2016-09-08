@@ -30,10 +30,10 @@ public class Blog extends BaseDomainObject {
     @ManyToOne
     private Type type;
 
-    @ManyToMany(mappedBy = "blogs")
+    @ManyToMany(mappedBy = "blogs", fetch = FetchType.LAZY)
     private List<Tag> tags = new ArrayList<Tag>();
 
-    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments = new ArrayList<Comment>();
 
