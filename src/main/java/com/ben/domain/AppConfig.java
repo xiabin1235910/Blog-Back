@@ -4,6 +4,7 @@
 
 package com.ben.domain;
 
+import com.ben.domain.jpa.listener.BaseDomainObjectEventListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -38,7 +39,7 @@ import java.util.List;
 @SpringBootApplication
 //@EnableJpaRepositories
 @EnableWebMvc
-@Import(RepositoryRestMvcConfiguration.class)
+@Import(RepositoryRestMvcConfiguration.class)  //https://spring.io/guides/gs/accessing-data-rest/
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
@@ -51,18 +52,24 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         for (String beanName : beanNames) {
             System.out.println(beanName);
         }
+
     }
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        // Configure JSON support
-        MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        mappingJacksonHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON));
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        mappingJacksonHttpMessageConverter.getObjectMapper().setDateFormat(format);
-        mappingJacksonHttpMessageConverter.setPrettyPrint(true);
-        // mappingJacksonHttpMessageConverter.getObjectMapper().getSerializationConfig().setSerializationInclusion(Inclusion.NON_NULL);
-        converters.add(mappingJacksonHttpMessageConverter);
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        // Configure JSON support
+//        MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
+//        mappingJacksonHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON));
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//        mappingJacksonHttpMessageConverter.getObjectMapper().setDateFormat(format);
+//        mappingJacksonHttpMessageConverter.setPrettyPrint(true);
+//        // mappingJacksonHttpMessageConverter.getObjectMapper().getSerializationConfig().setSerializationInclusion(Inclusion.NON_NULL);
+//        converters.add(mappingJacksonHttpMessageConverter);
+//    }
+
+    @Bean
+    BaseDomainObjectEventListener baseDomainObjectEventListener() {
+        return new BaseDomainObjectEventListener();
     }
 }
 
