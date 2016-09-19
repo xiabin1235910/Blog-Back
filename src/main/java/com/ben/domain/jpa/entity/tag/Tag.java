@@ -17,7 +17,7 @@ public class Tag extends BaseDomainObject {
 
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "tags")
     private List<Blog> blogs = new ArrayList<Blog>();
 
     public String getName() {

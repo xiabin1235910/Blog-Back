@@ -22,6 +22,8 @@ public class Blog extends BaseDomainObject {
 
     private String content;
 
+    private String contentAbstract;
+
     private int visitAmount;
 
     @ManyToOne
@@ -30,12 +32,17 @@ public class Blog extends BaseDomainObject {
     @ManyToOne
     private Type type;
 
-    @ManyToMany(mappedBy = "blogs", fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Tag> tags = new ArrayList<Tag>();
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments = new ArrayList<Comment>();
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.getBlogs().add(this);
+    }
 
     public String getTitle() {
         return title;
@@ -91,5 +98,13 @@ public class Blog extends BaseDomainObject {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getContentAbstract() {
+        return contentAbstract;
+    }
+
+    public void setContentAbstract(String contentAbstract) {
+        this.contentAbstract = contentAbstract;
     }
 }
