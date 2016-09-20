@@ -2,6 +2,7 @@ package com.ben.domain.jpa.entity.tag;
 
 import com.ben.domain.jpa.entity.BaseDomainObject;
 import com.ben.domain.jpa.entity.blog.Blog;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ public class Tag extends BaseDomainObject {
     private String name;
 
     @ManyToMany(mappedBy = "tags")
+    @JsonIgnore
     private List<Blog> blogs = new ArrayList<Blog>();
 
     public String getName() {
