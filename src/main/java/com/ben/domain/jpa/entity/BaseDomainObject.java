@@ -5,6 +5,7 @@
 package com.ben.domain.jpa.entity;
 
 import com.ben.domain.jpa.entity.constants.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
@@ -20,16 +21,21 @@ public class BaseDomainObject implements Identifiable<Long> {
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
+    @JsonIgnore
     private Status status = Status.Active;
 
     private Date createdate;
 
+    @JsonIgnore
     private Long creator;
 
+    @JsonIgnore
     private Date modifieddate;
 
+    @JsonIgnore
     private Long modifier;
 
+    @JsonIgnore
     private Long optlock;
 
     public Long getId() {
