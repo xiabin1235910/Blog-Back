@@ -5,6 +5,8 @@
 package com.ben.domain;
 
 import com.ben.domain.jpa.listener.BaseDomainObjectEventListener;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,10 +28,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 
 import javax.sql.DataSource;
 import java.text.SimpleDateFormat;
@@ -41,7 +40,7 @@ import java.util.List;
 //@EnableJpaRepositories
 @EnableWebMvc
 @Import(RepositoryRestMvcConfiguration.class)  //https://spring.io/guides/gs/accessing-data-rest/
-public class AppConfig extends WebMvcConfigurerAdapter {
+public class AppConfig extends WebMvcConfigurationSupport { // WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(AppConfig.class, args);
@@ -66,6 +65,25 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 //        mappingJacksonHttpMessageConverter.setPrettyPrint(true);
 //        // mappingJacksonHttpMessageConverter.getObjectMapper().getSerializationConfig().setSerializationInclusion(Inclusion.NON_NULL);
 //        converters.add(mappingJacksonHttpMessageConverter);
+//    }
+
+//    @Bean
+//    public MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter() {
+//        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+//        jsonConverter.setObjectMapper(objectMapper);
+//        return jsonConverter;
+//    }
+//
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        converters.add(customJackson2HttpMessageConverter());
+//        super.addDefaultHttpMessageConverters(converters);
+//    }
+
+//    public void aaa() {
+////        SerializationFeature.FAIL_ON_EMPTY_BEANS
 //    }
 
     @Override

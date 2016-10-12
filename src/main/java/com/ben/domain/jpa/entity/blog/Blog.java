@@ -6,6 +6,7 @@ import com.ben.domain.jpa.entity.comment.Comment;
 import com.ben.domain.jpa.entity.tag.Tag;
 import com.ben.domain.jpa.entity.type.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.List;
  * Created by Ben on 8/26/2016.
  */
 @Entity
+//  I believe this error to be caused by Jackson trying to JSON-ify internal stuff of the proxied entity. You can ignore these properties by adding the following to your entity:
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Blog extends BaseDomainObject {
 
     @Column(unique = true, nullable = false)
@@ -35,7 +38,7 @@ public class Blog extends BaseDomainObject {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Tag> tags = new ArrayList<Tag>();
 
-    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments = new ArrayList<Comment>();
 
@@ -106,5 +109,10 @@ public class Blog extends BaseDomainObject {
 
     public void setContentAbstract(String contentAbstract) {
         this.contentAbstract = contentAbstract;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

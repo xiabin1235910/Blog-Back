@@ -54,4 +54,10 @@ public class BlogController {
         return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = { "application/json" })
+    public @ResponseBody
+    Blog getBlogById(@PathVariable("id") Long id) {
+        return blogRepository.getOne(id);
+    }
+
 }
