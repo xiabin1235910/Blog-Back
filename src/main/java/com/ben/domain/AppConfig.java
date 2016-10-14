@@ -40,7 +40,7 @@ import java.util.List;
 //@EnableJpaRepositories
 @EnableWebMvc
 @Import(RepositoryRestMvcConfiguration.class)  //https://spring.io/guides/gs/accessing-data-rest/
-public class AppConfig extends WebMvcConfigurationSupport { // WebMvcConfigurerAdapter {
+public class AppConfig extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(AppConfig.class, args);

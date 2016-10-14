@@ -111,8 +111,8 @@ public class Blog extends BaseDomainObject {
         this.contentAbstract = contentAbstract;
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
+//    @Override
+//    public Object clone() throws CloneNotSupportedException {
+//        return super.clone();
+//    }
 }
